@@ -27,8 +27,8 @@ module.exports = {
     'no-new': 'off',
     'no-alert': 'off',
     'no-console': 'off',
-    'no-plusplus': 'off',
     'class-methods-use-this': 'off',
     'lines-between-class-members': 'off',
+    'no-throw-literal': 'off',
   },
 };
