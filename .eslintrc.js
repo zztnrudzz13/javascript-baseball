@@ -30,5 +30,6 @@ module.exports = {
     'class-methods-use-this': 'off',
     'lines-between-class-members': 'off',
     'no-throw-literal': 'off',
+    'no-await-in-loop': 'off',
   },
 };
