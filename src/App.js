@@ -1,4 +1,9 @@
 const MissionUtils = require('@woowacourse/mission-utils');
+const {
+  checkInputTypePositiveNumber,
+  checkNumberDuplication,
+  checkNumberLength,
+} = require('./utils');
 
 class App {
   #answer;
@@ -16,6 +21,19 @@ class App {
     this.#answer = this.#getComputerNumber();
   }
 
+  #checkUserNumberValid(userInput) {
+    const isInputNumberValid =
+      checkInputTypePositiveNumber(userInput) &&
+      checkNumberLength(userInput, 3) &&
+      checkNumberDuplication(userInput);
+    if (!isInputNumberValid) {
+      MissionUtils.Console.close();
+      throw '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!';
+    }
+
+    return userInput;
+  }
+
   async #getUserNumber() {
     return new Promise((resolve) => {
       MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
@@ -27,6 +45,7 @@ class App {
   async play() {
     this.#initialize();
     const inputNumber = await this.#getUserNumber();
+    this.#userNumber = this.#checkUserNumberValid(inputNumber);
   }
 }
 
