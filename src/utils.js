@@ -28,10 +28,10 @@ function getMatchCount(answerArray, userNumberArray) {
   };
   userNumberArray.forEach((number, userNumberIndex) => {
     const answerIndex = answerArray.indexOf(number);
-    const isUserNumberInAnswer = answerIndex !== 1;
+    const isUserNumberInAnswer = answerIndex !== -1;
     const hasSameIndex = checkIsIndexSame(answerIndex, userNumberIndex);
     if (hasSameIndex) result.strike += 1;
-    if (!isUserNumberInAnswer && !hasSameIndex) result.ball += 1;
+    if (isUserNumberInAnswer && !hasSameIndex) result.ball += 1;
   });
 
   return result;
