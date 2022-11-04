@@ -1,5 +1,5 @@
 function checkInputTypePositiveNumber(input) {
-  return !Number.isNaN(input) && input > 0;
+  return !Number.isNaN(input) && !input.includes(0);
 }
 
 function checkNumberLength(number, limitLength) {
