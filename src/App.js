@@ -7,6 +7,10 @@ const {
   convertNumberToStringArray,
 } = require('./utils');
 
+const CORRECT_ANSWER = '3스트라이크';
+const RESTART = '1';
+const END = '2';
+
 class App {
   #answer;
   #userNumber;
@@ -64,15 +68,40 @@ class App {
     return `${ballCount}볼 ${strikeCount}스트라이크`;
   }
 
+  async #guessProcess(guessStart) {
+    while (guessStart) {
+      const inputNumber = await this.#getUserNumber();
+      this.#userNumber = this.#checkUserNumberValid(inputNumber);
+      this.#result = this.#compareUserNumberWithAnswer(
+        this.#answer,
+        this.#userNumber,
+      );
+      const matchResult = this.#getMatchResult();
+      MissionUtils.Console.print(matchResult);
+      if (matchResult === CORRECT_ANSWER) return;
+    }
+  }
+
+  #endProcess() {
+    const END_MESSAGE = '3개의 숫자를 모두 맞히셨습니다! 게임 종료';
+    MissionUtils.Console.print(END_MESSAGE);
+    MissionUtils.Console.print(
+      '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
+    );
+    return new Promise((resolve) => {
+      MissionUtils.Console.readLine('', (number) => {
+        resolve(number);
+      });
+    });
+  }
+
   async play() {
     this.#initialize();
-    const inputNumber = await this.#getUserNumber();
-    this.#userNumber = this.#checkUserNumberValid(inputNumber);
-    this.#result = this.#compareUserNumberWithAnswer(
-      this.#answer,
-      this.#userNumber,
-    );
-    MissionUtils.Console.print(this.#getMatchResult());
+    const guessStart = true;
+    await this.#guessProcess(guessStart);
+    const endNumber = await this.#endProcess();
+    if (endNumber === RESTART) this.play();
+    if (endNumber === END) MissionUtils.Console.close();
   }
 }
 
