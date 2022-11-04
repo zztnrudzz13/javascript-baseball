@@ -7,7 +7,7 @@ const {
   convertNumberToStringArray,
 } = require('./utils');
 
-const CORRECT_ANSWER = '3스트라이크';
+const NUMBER_DIGIT_LIMIT = 3;
 const RESTART = '1';
 const END = '2';
 
@@ -18,7 +18,7 @@ class App {
 
   #getComputerNumber() {
     const randomArray = [];
-    while (randomArray.length < 3) {
+    while (randomArray.length < NUMBER_DIGIT_LIMIT) {
       const randomNumber = MissionUtils.Random.pickNumberInRange(1, 9);
       if (!randomArray.includes(randomNumber)) randomArray.push(randomNumber);
     }
@@ -34,7 +34,7 @@ class App {
   #checkUserNumberValid(userInput) {
     const isInputNumberValid =
       checkInputTypePositiveNumber(userInput) &&
-      checkNumberLength(userInput, 3) &&
+      checkNumberLength(userInput, NUMBER_DIGIT_LIMIT) &&
       checkNumberDuplication(userInput);
 
     return isInputNumberValid;
@@ -92,36 +92,18 @@ class App {
       this.#userNumber,
     );
     const resultString = this.#getResultString();
+    const isGuessCorrect = this.#result.strike === NUMBER_DIGIT_LIMIT;
     MissionUtils.Console.print(resultString);
-    if (resultString === CORRECT_ANSWER) {
+    if (isGuessCorrect) {
       this.#endProcess();
     } else {
       this.#getUserNumber();
     }
   }
 
-  async #guessProcess(guessStart) {
-    while (guessStart) {
-      const inputNumber = await this.#getUserNumber();
-      this.#userNumber = this.#checkUserNumberValid(inputNumber);
-      this.#result = this.#compareUserNumberWithAnswer(
-        this.#answer,
-        this.#userNumber,
-      );
-      const matchResult = this.#getMatchResult();
-      MissionUtils.Console.print(matchResult);
-      if (matchResult === CORRECT_ANSWER) return;
-    }
-  }
-
   play() {
     this.#initialize();
     this.#getUserNumber();
-    // const guessStart = true;
-    // await this.#guessProcess(guessStart);
-    // const endNumber = await this.#endProcess();
-    // if (endNumber === RESTART) this.play();
-    // if (endNumber === END) MissionUtils.Console.close();
   }
 }
 
