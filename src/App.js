@@ -10,6 +10,7 @@ const {
 class App {
   #answer;
   #userNumber;
+  #result;
 
   #getComputerNumber() {
     const randomArray = MissionUtils.Random.pickUniqueNumbersInRange(0, 9, 3);
@@ -47,14 +48,31 @@ class App {
   #compareUserNumberWithAnswer(answer, userNumber) {
     const answerArray = convertNumberToStringArray(answer);
     const userNumberArray = convertNumberToStringArray(userNumber);
-    getMatchCount(answerArray, userNumberArray);
+    return getMatchCount(answerArray, userNumberArray);
+  }
+
+  #getMatchResult() {
+    const strikeCount = this.#result.strike;
+    const ballCount = this.#result.ball;
+    const isNothing = strikeCount === 0 && ballCount === 0;
+    const isOnlyBallCount = strikeCount === 0 && ballCount !== 0;
+    const isOnlyStrikeCount = strikeCount !== 0 && ballCount === 0;
+    if (isNothing) return '낫싱';
+    if (isOnlyBallCount) return `${ballCount}볼`;
+    if (isOnlyStrikeCount) return `${strikeCount}스트라이크`;
+
+    return `${ballCount}볼 ${strikeCount}스트라이크`;
   }
 
   async play() {
     this.#initialize();
     const inputNumber = await this.#getUserNumber();
     this.#userNumber = this.#checkUserNumberValid(inputNumber);
-    this.#compareUserNumberWithAnswer(this.#answer, this.#userNumber);
+    this.#result = this.#compareUserNumberWithAnswer(
+      this.#answer,
+      this.#userNumber,
+    );
+    MissionUtils.Console.print(this.#getMatchResult());
   }
 }
 
