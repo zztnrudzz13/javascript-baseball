@@ -39,20 +39,16 @@ class App {
 
   #setUserNumber(number) {
     if (this.#checkUserNumberValid(number)) {
-      this.#userNumber = number();
+      this.#userNumber = number;
       this.#getMatchResult();
     } else {
-      throw new Error(
-        '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!',
-      );
+      throw '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!';
     }
   }
 
-  async #getUserNumber() {
-    return new Promise((resolve) => {
-      MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
-        resolve(number);
-      });
+  #getUserNumber() {
+    MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
+      this.#setUserNumber(number);
     });
   }
 
@@ -62,7 +58,7 @@ class App {
     return getMatchCount(answerArray, userNumberArray);
   }
 
-  #getMatchResult() {
+  #getResultString() {
     const strikeCount = this.#result.strike;
     const ballCount = this.#result.ball;
     const isNothing = strikeCount === 0 && ballCount === 0;
@@ -73,6 +69,32 @@ class App {
     if (isOnlyStrikeCount) return `${strikeCount}스트라이크`;
 
     return `${ballCount}볼 ${strikeCount}스트라이크`;
+  }
+
+  #endProcess() {
+    const END_MESSAGE = '3개의 숫자를 모두 맞히셨습니다! 게임 종료';
+    MissionUtils.Console.print(END_MESSAGE);
+    MissionUtils.Console.print(
+      '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
+    );
+    MissionUtils.Console.readLine('', (number) => {
+      if (number === RESTART) this.play();
+      if (number === END) MissionUtils.Console.close();
+    });
+  }
+
+  #getMatchResult() {
+    this.#result = this.#compareUserNumberWithAnswer(
+      this.#answer,
+      this.#userNumber,
+    );
+    const resultString = this.#getResultString();
+    MissionUtils.Console.print(resultString);
+    if (resultString === CORRECT_ANSWER) {
+      this.#endProcess();
+    } else {
+      this.#getUserNumber();
+    }
   }
 
   async #guessProcess(guessStart) {
@@ -87,19 +109,6 @@ class App {
       MissionUtils.Console.print(matchResult);
       if (matchResult === CORRECT_ANSWER) return;
     }
-  }
-
-  #endProcess() {
-    const END_MESSAGE = '3개의 숫자를 모두 맞히셨습니다! 게임 종료';
-    MissionUtils.Console.print(END_MESSAGE);
-    MissionUtils.Console.print(
-      '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
-    );
-    return new Promise((resolve) => {
-      MissionUtils.Console.readLine('', (number) => {
-        resolve(number);
-      });
-    });
   }
 
   play() {
