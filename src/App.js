@@ -16,15 +16,17 @@ class App {
     this.#answer = this.#getComputerNumber();
   }
 
-  #getUserNumber() {
-    MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
-      this.#userNumber = number;
+  async #getUserNumber() {
+    return new Promise((resolve) => {
+      MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
+        resolve(number);
+      });
     });
   }
 
-  play() {
+  async play() {
     this.#initialize();
-    this.#getUserNumber();
+    const inputNumber = await this.#getUserNumber();
   }
 }
 
