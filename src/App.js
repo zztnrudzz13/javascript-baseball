@@ -17,9 +17,12 @@ class App {
   #result;
 
   #getComputerNumber() {
-    const randomArray = MissionUtils.Random.pickUniqueNumbersInRange(0, 9, 3);
-    const randomNumber = randomArray.join('');
-    return randomNumber;
+    const randomArray = [];
+    while (randomArray.length < 3) {
+      const randomNumber = MissionUtils.Random.pickNumberInRange(1, 9);
+      if (!randomArray.includes(randomNumber)) randomArray.push(randomNumber);
+    }
+    return randomArray.join('');
   }
 
   #initialize() {
