@@ -3,6 +3,8 @@ const {
   checkInputTypePositiveNumber,
   checkNumberDuplication,
   checkNumberLength,
+  getMatchCount,
+  convertNumberToStringArray,
 } = require('./utils');
 
 class App {
@@ -21,6 +23,14 @@ class App {
     this.#answer = this.#getComputerNumber();
   }
 
+  async #getUserNumber() {
+    return new Promise((resolve) => {
+      MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
+        resolve(number);
+      });
+    });
+  }
+
   #checkUserNumberValid(userInput) {
     const isInputNumberValid =
       checkInputTypePositiveNumber(userInput) &&
@@ -34,18 +44,17 @@ class App {
     return userInput;
   }
 
-  async #getUserNumber() {
-    return new Promise((resolve) => {
-      MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
-        resolve(number);
-      });
-    });
+  #compareUserNumberWithAnswer(answer, userNumber) {
+    const answerArray = convertNumberToStringArray(answer);
+    const userNumberArray = convertNumberToStringArray(userNumber);
+    getMatchCount(answerArray, userNumberArray);
   }
 
   async play() {
     this.#initialize();
     const inputNumber = await this.#getUserNumber();
     this.#userNumber = this.#checkUserNumberValid(inputNumber);
+    this.#compareUserNumberWithAnswer(this.#answer, this.#userNumber);
   }
 }
 
