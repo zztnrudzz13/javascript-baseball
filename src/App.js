@@ -28,25 +28,32 @@ class App {
     this.#answer = this.#getComputerNumber();
   }
 
+  #checkUserNumberValid(userInput) {
+    const isInputNumberValid =
+      checkInputTypePositiveNumber(userInput) &&
+      checkNumberLength(userInput, 3) &&
+      checkNumberDuplication(userInput);
+
+    return isInputNumberValid;
+  }
+
+  #setUserNumber(number) {
+    if (this.#checkUserNumberValid(number)) {
+      this.#userNumber = number();
+      this.#getMatchResult();
+    } else {
+      throw new Error(
+        '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!',
+      );
+    }
+  }
+
   async #getUserNumber() {
     return new Promise((resolve) => {
       MissionUtils.Console.readLine('숫자를 입력해주세요 : ', (number) => {
         resolve(number);
       });
     });
-  }
-
-  #checkUserNumberValid(userInput) {
-    const isInputNumberValid =
-      checkInputTypePositiveNumber(userInput) &&
-      checkNumberLength(userInput, 3) &&
-      checkNumberDuplication(userInput);
-    if (!isInputNumberValid) {
-      MissionUtils.Console.close();
-      throw '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!';
-    }
-
-    return userInput;
   }
 
   #compareUserNumberWithAnswer(answer, userNumber) {
@@ -95,14 +102,18 @@ class App {
     });
   }
 
-  async play() {
+  play() {
     this.#initialize();
-    const guessStart = true;
-    await this.#guessProcess(guessStart);
-    const endNumber = await this.#endProcess();
-    if (endNumber === RESTART) this.play();
-    if (endNumber === END) MissionUtils.Console.close();
+    this.#getUserNumber();
+    // const guessStart = true;
+    // await this.#guessProcess(guessStart);
+    // const endNumber = await this.#endProcess();
+    // if (endNumber === RESTART) this.play();
+    // if (endNumber === END) MissionUtils.Console.close();
   }
 }
+
+const app = new App();
+app.play();
 
 module.exports = App;
