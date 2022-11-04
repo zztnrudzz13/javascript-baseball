@@ -20,7 +20,8 @@ class App {
     const randomArray = [];
     while (randomArray.length < NUMBER_DIGIT_LIMIT) {
       const randomNumber = MissionUtils.Random.pickNumberInRange(1, 9);
-      if (!randomArray.includes(randomNumber)) randomArray.push(randomNumber);
+      const hasDuplication = randomArray.includes(randomNumber);
+      if (!hasDuplication) randomArray.push(randomNumber);
     }
     return randomArray.join('');
   }
@@ -83,6 +84,7 @@ class App {
     MissionUtils.Console.readLine('', (number) => {
       if (number === RESTART) this.play();
       if (number === END) MissionUtils.Console.close();
+      if (number !== RESTART && number !== END) this.#endProcess();
     });
   }
 
