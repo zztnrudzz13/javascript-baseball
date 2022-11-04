@@ -10,6 +10,8 @@ const {
 const NUMBER_DIGIT_LIMIT = 3;
 const RESTART = '1';
 const END = '2';
+const START_MESSAGE = '숫자 야구게임을 시작합니다';
+const END_MESSAGE = '3개의 숫자를 모두 맞히셨습니다! 게임 종료';
 
 class App {
   #answer;
@@ -27,7 +29,6 @@ class App {
   }
 
   #initialize() {
-    const START_MESSAGE = '숫자 야구게임을 시작합니다';
     MissionUtils.Console.print(START_MESSAGE);
     this.#answer = this.#getComputerNumber();
   }
@@ -76,8 +77,6 @@ class App {
   }
 
   #endProcess() {
-    const END_MESSAGE = '3개의 숫자를 모두 맞히셨습니다! 게임 종료';
-    MissionUtils.Console.print(END_MESSAGE);
     MissionUtils.Console.print(
       '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
     );
@@ -97,6 +96,7 @@ class App {
     const isGuessCorrect = this.#result.strike === NUMBER_DIGIT_LIMIT;
     MissionUtils.Console.print(resultString);
     if (isGuessCorrect) {
+      MissionUtils.Console.print(END_MESSAGE);
       this.#endProcess();
     } else {
       this.#getUserNumber();
