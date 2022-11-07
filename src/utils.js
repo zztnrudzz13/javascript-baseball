@@ -39,10 +39,15 @@ function getMatchCount(answerArray, userNumberArray) {
   return result;
 }
 
+function sendErrorMessage(string) {
+  throw new Error(`⚠️  ${string}!`);
+}
+
 module.exports = {
   checkInputNumber1To9,
   checkNumberDuplication,
   checkNumberLength,
   convertNumberToStringArray,
   getMatchCount,
+  sendErrorMessage,
 };

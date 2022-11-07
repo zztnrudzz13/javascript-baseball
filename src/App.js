@@ -5,6 +5,7 @@ const {
   checkNumberLength,
   getMatchCount,
   convertNumberToStringArray,
+  sendErrorMessage,
 } = require('./utils');
 
 const NUMBER_DIGIT_LIMIT = 3;
@@ -34,20 +35,23 @@ class App {
   }
 
   #checkUserNumberValid(userInput) {
-    const isInputNumberValid =
-      checkInputNumber1To9(userInput) &&
-      checkNumberLength(userInput, NUMBER_DIGIT_LIMIT) &&
-      checkNumberDuplication(userInput);
+    if (!checkInputNumber1To9(userInput)) {
+      sendErrorMessage('1부터 9사이의 숫자를 입력해주세요');
+    }
+    if (!checkNumberLength(userInput, NUMBER_DIGIT_LIMIT)) {
+      sendErrorMessage('세자리 자릿수를 입력해주세요');
+    }
+    if (!checkNumberDuplication(userInput)) {
+      sendErrorMessage('중복된 숫자가 있어요');
+    }
 
-    return isInputNumberValid;
+    return true;
   }
 
   #setUserNumber(number) {
     if (this.#checkUserNumberValid(number)) {
       this.#userNumber = number;
       this.#getMatchResult();
-    } else {
-      throw '⚠️ 양수 1부터 9 안에서 서로 다른 세개의 숫자를 입력해주세요!';
     }
   }
 
