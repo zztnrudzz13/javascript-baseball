@@ -1,5 +1,5 @@
 function checkInputNumber1To9(input) {
-  const numberRegex = /^\d+$/;
+  const numberRegex = /^[1-9]+$/;
   const isInputNumber = numberRegex.test(input);
   return isInputNumber;
 }
