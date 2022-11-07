@@ -21,11 +21,13 @@ class App {
 
   #getComputerNumber() {
     const randomArray = [];
+
     while (randomArray.length < NUMBER_DIGIT_LIMIT) {
       const randomNumber = MissionUtils.Random.pickNumberInRange(1, 9);
       const hasDuplication = randomArray.includes(randomNumber);
       if (!hasDuplication) randomArray.push(randomNumber);
     }
+
     return randomArray.join('');
   }
 
@@ -84,6 +86,7 @@ class App {
     MissionUtils.Console.print(
       '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.',
     );
+
     MissionUtils.Console.readLine('', (number) => {
       if (number === RESTART) this.play();
       if (number === END) MissionUtils.Console.close();
