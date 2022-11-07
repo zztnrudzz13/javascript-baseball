@@ -1,6 +1,6 @@
 const MissionUtils = require('@woowacourse/mission-utils');
 const {
-  checkInputTypePositiveNumber,
+  checkInputNumber1To9,
   checkNumberDuplication,
   checkNumberLength,
   getMatchCount,
@@ -35,7 +35,7 @@ class App {
 
   #checkUserNumberValid(userInput) {
     const isInputNumberValid =
-      checkInputTypePositiveNumber(userInput) &&
+      checkInputNumber1To9(userInput) &&
       checkNumberLength(userInput, NUMBER_DIGIT_LIMIT) &&
       checkNumberDuplication(userInput);
 
@@ -108,8 +108,5 @@ class App {
     this.#getUserNumber();
   }
 }
-
-const app = new App();
-app.play();
 
 module.exports = App;

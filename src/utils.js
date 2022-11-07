@@ -1,5 +1,7 @@
-function checkInputTypePositiveNumber(input) {
-  return !Number.isNaN(input) && !input.includes(0);
+function checkInputNumber1To9(input) {
+  const numberRegex = /^\d+$/;
+  const isInputNumber = numberRegex.test(input);
+  return isInputNumber;
 }
 
 function checkNumberLength(number, limitLength) {
@@ -38,7 +40,7 @@ function getMatchCount(answerArray, userNumberArray) {
 }
 
 module.exports = {
-  checkInputTypePositiveNumber,
+  checkInputNumber1To9,
   checkNumberDuplication,
   checkNumberLength,
   convertNumberToStringArray,
