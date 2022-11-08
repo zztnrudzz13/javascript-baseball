@@ -36,7 +36,7 @@ class App {
     this.#answer = this.#getComputerNumber();
   }
 
-  #checkUserNumberValid(userInput) {
+  checkUserNumberValid(userInput) {
     if (!checkInputNumber1To9(userInput)) {
       sendErrorMessage('1부터 9사이의 숫자를 입력해주세요');
     }
@@ -51,7 +51,7 @@ class App {
   }
 
   #setUserNumber(number) {
-    if (this.#checkUserNumberValid(number)) {
+    if (this.checkUserNumberValid(number)) {
       this.#userNumber = number;
       this.#getMatchResult();
     }
