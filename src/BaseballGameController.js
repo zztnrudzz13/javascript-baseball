@@ -14,8 +14,7 @@ class BaseballGameController {
   }
 
   setComputerNumber() {
-    let computerNumber = ComputerNumber.generate();
-    computerNumber = Number(computerNumber.join(''));
+    const computerNumber = ComputerNumber.generate();
     this.#model.setComputerNumber(computerNumber);
   }
 
@@ -25,7 +24,8 @@ class BaseballGameController {
 
   setUserGameNumber(number, resolve) {
     try {
-      this.#model.setUserNumber(number);
+      const numbers = Array.from(String(number), (num) => Number(num));
+      this.#model.setUserNumber(numbers);
       resolve();
     } catch (error) {
       this.controlException(error);
