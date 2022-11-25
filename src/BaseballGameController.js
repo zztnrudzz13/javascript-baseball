@@ -14,7 +14,8 @@ class BaseballGameController {
   }
 
   setComputerNumber() {
-    const computerNumber = ComputerNumber.generate();
+    let computerNumber = ComputerNumber.generate();
+    computerNumber = Number(computerNumber.join(''));
     this.#model.setComputerNumber(computerNumber);
   }
 

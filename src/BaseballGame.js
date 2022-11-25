@@ -7,9 +7,15 @@ class BaseballGame {
     this.#controller = controller;
   }
 
+  match() {
+    console.log(this.#model.getUserNumber());
+    console.log(this.#model.getComputerNumber());
+  }
+
   start() {
     this.#controller.renderStart();
-    this.#controller.readUserGameNumber();
+    this.#controller.setComputerNumber();
+    this.#controller.readUserGameNumber(() => this.match());
   }
 }
 
