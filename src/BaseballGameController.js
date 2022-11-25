@@ -1,5 +1,6 @@
 const { printStart } = require('./view/OutputView');
 const { readGameNumber } = require('./view/InputView');
+const ComputerNumber = require('./ComputerNumber');
 
 class BaseballGameController {
   #model;
@@ -12,21 +13,27 @@ class BaseballGameController {
     console.log(error);
   }
 
+  setComputerNumber() {
+    const computerNumber = ComputerNumber.generate();
+    this.#model.setComputerNumber(computerNumber);
+  }
+
   renderStart() {
     printStart();
   }
 
-  setUserGameNumber(number) {
+  setUserGameNumber(number, resolve) {
     try {
       this.#model.setUserNumber(number);
+      resolve();
     } catch (error) {
       this.controlException(error);
     }
   }
 
-  readUserGameNumber() {
+  readUserGameNumber(resolve) {
     readGameNumber((number) => {
-      this.setUserGameNumber(number);
+      this.setUserGameNumber(number, resolve);
     });
   }
 }
