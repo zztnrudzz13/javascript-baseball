@@ -2,8 +2,8 @@ const BaseballGame = require('./BaseballGame');
 const BaseballGameController = require('./BaseballGameController');
 const BaseballGameModel = require('./model/BaseballGameModel');
 
-const baseballGameController = new BaseballGameController();
 const baseballGameModel = new BaseballGameModel();
+const baseballGameController = new BaseballGameController(baseballGameModel);
 
 class App {
   play() {
