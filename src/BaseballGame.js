@@ -14,7 +14,7 @@ class BaseballGame {
     this.#controller.readUserGameCommand(() => {
       const command = this.#model.getCommand();
       if (command === 1) this.start();
-      if (command === 2) console.log('end');
+      if (command === 2) this.#controller.finishGame();
     });
   }
 

@@ -1,3 +1,4 @@
+const MissionUtils = require('@woowacourse/mission-utils');
 const {
   printStart,
   printCurrentResult,
@@ -70,6 +71,10 @@ class BaseballGameController {
     readGameCommand((command) => {
       this.setUserCommand(command, resolve);
     });
+  }
+
+  finishGame() {
+    MissionUtils.Console.close();
   }
 }
 
