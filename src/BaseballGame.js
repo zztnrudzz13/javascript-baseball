@@ -1,3 +1,5 @@
+const BaseballMatch = require('./BaseballMatch');
+
 class BaseballGame {
   #controller;
   #model;
@@ -7,9 +9,24 @@ class BaseballGame {
     this.#controller = controller;
   }
 
+  end() {}
+
+  checkResult() {
+    this.#controller.renderCurrentResult();
+    const strikeCount = this.#model.getBallCount();
+    if (strikeCount === 3) this.end();
+  }
+
   match() {
-    console.log(this.#model.getUserNumber());
-    console.log(this.#model.getComputerNumber());
+    const userNumber = this.#model.getUserNumber();
+    const computerNumber = this.#model.getComputerNumber();
+    const strikeCount = BaseballMatch.getStrikeCount(
+      userNumber,
+      computerNumber,
+    );
+    const ballCount = BaseballMatch.getBallCount(userNumber, computerNumber);
+    this.#controller.setCurrentResult(strikeCount, ballCount);
+    this.checkResult();
   }
 
   start() {

@@ -1,6 +1,8 @@
 class BaseballGameModel {
   #userNumber;
   #computerNumber;
+  #strike;
+  #ball;
 
   setUserNumber(number) {
     this.#userNumber = number;
@@ -16,6 +18,22 @@ class BaseballGameModel {
 
   getComputerNumber() {
     return this.#computerNumber;
+  }
+
+  setStrikeCount(count) {
+    this.#strike = count;
+  }
+
+  getStrikeCount() {
+    return this.#strike;
+  }
+
+  setBallCount(count) {
+    this.#ball = count;
+  }
+
+  getBallCount() {
+    return this.#ball;
   }
 }
 
