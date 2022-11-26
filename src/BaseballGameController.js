@@ -7,6 +7,12 @@ const {
 } = require('./view/OutputView');
 const { readGameNumber, readGameCommand } = require('./view/InputView');
 const ComputerNumber = require('./ComputerNumber');
+const {
+  checkGameCommand,
+  checkLength,
+  checkNumberRange,
+  checkDuplication,
+} = require('./Validation');
 
 class BaseballGameController {
   #model;
@@ -16,7 +22,8 @@ class BaseballGameController {
   }
 
   controlException(error) {
-    printError(error);
+    printError(error.message);
+    this.finishGame();
   }
 
   setComputerNumber() {
@@ -28,8 +35,15 @@ class BaseballGameController {
     printStart();
   }
 
+  validateUserGameNumber(number) {
+    checkNumberRange(Number(number));
+    checkLength(number, 3);
+    checkDuplication(number);
+  }
+
   setUserGameNumber(number, resolve) {
     try {
+      this.validateUserGameNumber(number);
       const numbers = Array.from(String(number), (num) => Number(num));
       this.#model.setUserNumber(numbers);
       resolve();
@@ -61,6 +75,7 @@ class BaseballGameController {
 
   setUserCommand(command, resolve) {
     try {
+      checkGameCommand(Number(command));
       this.#model.setCommand(Number(command));
       resolve();
     } catch (error) {
