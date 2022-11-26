@@ -3,6 +3,7 @@ const {
   printStart,
   printCurrentResult,
   printGameEnd,
+  printError,
 } = require('./view/OutputView');
 const { readGameNumber, readGameCommand } = require('./view/InputView');
 const ComputerNumber = require('./ComputerNumber');
@@ -15,7 +16,7 @@ class BaseballGameController {
   }
 
   controlException(error) {
-    console.log(error);
+    printError(error);
   }
 
   setComputerNumber() {
