@@ -3,7 +3,6 @@ const {
   printStart,
   printCurrentResult,
   printGameEnd,
-  printError,
 } = require('./view/OutputView');
 const { readGameNumber, readGameCommand } = require('./view/InputView');
 const ComputerNumber = require('./ComputerNumber');
@@ -19,11 +18,6 @@ class BaseballGameController {
 
   constructor(model) {
     this.#model = model;
-  }
-
-  controlException(error) {
-    printError(error.message);
-    this.finishGame();
   }
 
   setComputerNumber() {
@@ -42,14 +36,10 @@ class BaseballGameController {
   }
 
   setUserGameNumber(number, resolve) {
-    try {
-      this.validateUserGameNumber(number);
-      const numbers = Array.from(String(number), (num) => Number(num));
-      this.#model.setUserNumber(numbers);
-      resolve();
-    } catch (error) {
-      this.controlException(error);
-    }
+    this.validateUserGameNumber(number);
+    const numbers = Array.from(String(number), (num) => Number(num));
+    this.#model.setUserNumber(numbers);
+    resolve();
   }
 
   setCurrentResult(strikeCount, ballCount) {
@@ -74,13 +64,9 @@ class BaseballGameController {
   }
 
   setUserCommand(command, resolve) {
-    try {
-      checkGameCommand(Number(command));
-      this.#model.setCommand(Number(command));
-      resolve();
-    } catch (error) {
-      this.controlException(error);
-    }
+    checkGameCommand(Number(command));
+    this.#model.setCommand(Number(command));
+    resolve();
   }
 
   readUserGameCommand(resolve) {
