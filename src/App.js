@@ -7,6 +7,7 @@ const baseballGameController = new BaseballGameController(baseballGameModel);
 
 class App {
   play() {
+    baseballGameController.renderStart();
     const baseballGame = new BaseballGame(
       baseballGameModel,
       baseballGameController,

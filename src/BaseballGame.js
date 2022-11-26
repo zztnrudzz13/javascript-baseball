@@ -9,15 +9,12 @@ class BaseballGame {
     this.#controller = controller;
   }
 
-  retry() {
-    console.log('retry');
-  }
-
   end() {
     this.#controller.renderGameEnd();
     this.#controller.readUserGameCommand(() => {
       const command = this.#model.getCommand();
-      if (command === 1) this.retry();
+      if (command === 1) this.start();
+      if (command === 2) console.log('end');
     });
   }
 
@@ -42,7 +39,6 @@ class BaseballGame {
   }
 
   start() {
-    this.#controller.renderStart();
     this.#controller.setComputerNumber();
     console.log(this.#model.getComputerNumber());
     this.#controller.readUserGameNumber(() => this.match());
