@@ -6,7 +6,7 @@ const Validation = {
   },
 
   checkDuplication(iterator) {
-    if (iterator.length !== Set(iterator).size) {
+    if (iterator.length !== new Set(iterator).size) {
       throw new Error('중복 없이 입력해 주세요.');
     }
   },
