@@ -14,6 +14,10 @@ const OutputView = {
     if (strikeCount > 0 && ballCount > 0)
       MissionUtils.Console.print(`${strikeCount}스트라이크 ${ballCount}볼`);
   },
+
+  printGameEnd() {
+    MissionUtils.Console.print('3개의 숫자를 모두 맞히셨습니다! 게임 종료');
+  },
 };
 
 module.exports = OutputView;
