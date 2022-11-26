@@ -12,7 +12,7 @@ const OutputView = {
     if (strikeCount > 0 && ballCount === 0)
       MissionUtils.Console.print(`${strikeCount}스트라이크`);
     if (strikeCount > 0 && ballCount > 0)
-      MissionUtils.Console.print(`${strikeCount}스트라이크 ${ballCount}볼`);
+      MissionUtils.Console.print(`${ballCount}볼 ${strikeCount}스트라이크`);
   },
 
   printGameEnd() {
