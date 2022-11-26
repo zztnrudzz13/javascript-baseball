@@ -9,12 +9,24 @@ class BaseballGame {
     this.#controller = controller;
   }
 
-  end() {}
+  retry() {
+    console.log('retry');
+  }
+
+  end() {
+    this.#controller.renderGameEnd();
+    this.#controller.readUserGameCommand(() => {
+      const command = this.#model.getCommand();
+      if (command === 1) this.retry();
+    });
+  }
 
   checkResult() {
     this.#controller.renderCurrentResult();
     const strikeCount = this.#model.getStrikeCount();
-    if (strikeCount === 3) this.end();
+    if (strikeCount === 3) return this.end();
+
+    return this.#controller.readUserGameNumber(() => this.match());
   }
 
   match() {
