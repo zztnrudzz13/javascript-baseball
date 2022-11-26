@@ -13,7 +13,7 @@ class BaseballGame {
 
   checkResult() {
     this.#controller.renderCurrentResult();
-    const strikeCount = this.#model.getBallCount();
+    const strikeCount = this.#model.getStrikeCount();
     if (strikeCount === 3) this.end();
   }
 
@@ -32,6 +32,7 @@ class BaseballGame {
   start() {
     this.#controller.renderStart();
     this.#controller.setComputerNumber();
+    console.log(this.#model.getComputerNumber());
     this.#controller.readUserGameNumber(() => this.match());
   }
 }

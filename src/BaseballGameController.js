@@ -1,4 +1,4 @@
-const { printStart } = require('./view/OutputView');
+const { printStart, printCurrentResult } = require('./view/OutputView');
 const { readGameNumber } = require('./view/InputView');
 const ComputerNumber = require('./ComputerNumber');
 
@@ -30,6 +30,17 @@ class BaseballGameController {
     } catch (error) {
       this.controlException(error);
     }
+  }
+
+  setCurrentResult(strikeCount, ballCount) {
+    this.#model.setStrikeCount(strikeCount);
+    this.#model.setBallCount(ballCount);
+  }
+
+  renderCurrentResult() {
+    const strikeCount = this.#model.getStrikeCount();
+    const ballCount = this.#model.getBallCount();
+    printCurrentResult(strikeCount, ballCount);
   }
 
   readUserGameNumber(resolve) {
